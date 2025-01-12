@@ -13,7 +13,7 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 Refresh Token 입니다."),
     INVALID_ACCESS_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 Access Token 입니다."),
     INVALID_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 Token 정보 입니다."),
-    ;
+    INVALID_MEMBER_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 유저 고유 번호(id) 입니다.");
 
     private final HttpStatus status;
     private final String message;
