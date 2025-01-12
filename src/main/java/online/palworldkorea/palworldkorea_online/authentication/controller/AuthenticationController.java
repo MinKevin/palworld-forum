@@ -1,5 +1,6 @@
 package online.palworldkorea.palworldkorea_online.authentication.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.authentication.service.AuthenticationService;
 import online.palworldkorea.palworldkorea_online.global.response.SuccessCode;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public CommonResponse<?> login(@RequestBody MemberDto.LoginRequest memberRegisterReguestDto) {
+    public CommonResponse<?> login(@RequestBody @Valid MemberDto.LoginRequest memberRegisterReguestDto) {
         return CommonResponse.success(SuccessCode.LOGIN_SUCCESS, authenticationService.login(memberRegisterReguestDto));
     }
 

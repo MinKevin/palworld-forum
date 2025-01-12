@@ -6,6 +6,7 @@ import online.palworldkorea.palworldkorea_online.global.exception.custom_excepti
 import online.palworldkorea.palworldkorea_online.global.jwt.JwtTokenUtil;
 import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.mapper.MemberMapper;
 import online.palworldkorea.palworldkorea_online.member.service.MemberService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final MemberService memberService;
+    private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
 
     public MemberDto.Response login(MemberDto.LoginRequest memberLoginRequestDto) {
-        Member member = memberService.getMember(memberLoginRequestDto.getEmail());
+        Member member = memberService.getMemberByEmail(memberLoginRequestDto.getEmail());
 
         checkPassword(memberLoginRequestDto, member);
 
@@ -30,7 +32,7 @@ public class AuthenticationService {
                 jwtTokenUtil.generateAccessToken(member.getEmail(), member.getAuthorities())
         );
 
-        return MemberDto.Response.fromEntity(member, tokenDto);
+        return memberMapper.toResponse(member, tokenDto);
     }
 
     public TokenDto refreshAccessToken(String refreshToken) {

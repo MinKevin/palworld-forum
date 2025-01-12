@@ -43,32 +43,12 @@ public class MemberDto {
         private String password;
     }
 
-    @Builder
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Response {
         private String email;
         private String nickname;
         private MemberRole memberRole;
         private TokenDto token;
-
-        public static Response fromEntity(Member member) {
-            return Response.builder()
-                    .email(member.getEmail())
-                    .nickname(member.getNickname())
-                    .memberRole(member.getMemberRole())
-                    .build();
-        }
-
-        public static Response fromEntity(Member member, TokenDto tokenDto) {
-            return Response.builder()
-                    .email(member.getEmail())
-                    .nickname(member.getNickname())
-                    .memberRole(member.getMemberRole())
-                    .token(tokenDto)
-                    .build();
-        }
     }
 }

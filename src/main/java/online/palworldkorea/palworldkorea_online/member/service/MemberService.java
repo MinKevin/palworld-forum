@@ -5,8 +5,10 @@ import online.palworldkorea.palworldkorea_online.global.exception.custom_excepti
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.AlreadyExistsNicknameException;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.EmailNotFoundException;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.InvalidMemberIdException;
+import online.palworldkorea.palworldkorea_online.global.util.MemberUtil;
 import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.mapper.MemberMapper;
 import online.palworldkorea.palworldkorea_online.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
     public MemberDto.Response signUp(MemberDto.RegisterReguest memberRegisterReguestDto) {
@@ -28,20 +31,15 @@ public class MemberService {
 
         memberRepository.save(member);
 
-        return MemberDto.Response.fromEntity(member);
+        return memberMapper.toResponse(member);
     }
 
-    public MemberDto.Response deleteMember(long id) {
-        Member member = getMemberById(id);
+    public MemberDto.Response deleteMember() {
+        Member member = getMemberByEmail(MemberUtil.getEmail());
 
         memberRepository.delete(member);
 
-        return MemberDto.Response.fromEntity(member);
-    }
-
-    private Member getMemberById(long id) {
-        return memberRepository.findById(id)
-                .orElseThrow(InvalidMemberIdException::new);
+        return memberMapper.toResponse(member);
     }
 
     public Member getMemberByEmail(String email) {

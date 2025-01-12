@@ -56,8 +56,7 @@ public class Member implements UserDetails {
     }
 
     public boolean checkInputPasswordIsCorrect(String inputPassword, PasswordEncoder passwordEncoder) {
-        String encodedInputPassword = passwordEncoder.encode(inputPassword);
 
-        return encodedInputPassword.equals(this.password);
+        return passwordEncoder.matches(inputPassword, this.password);
     }
 }
