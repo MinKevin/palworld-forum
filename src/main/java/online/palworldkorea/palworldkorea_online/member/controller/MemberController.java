@@ -19,9 +19,8 @@ public class MemberController {
         return CommonResponse.success(SuccessCode.REGISTER_MEMBER_SUCCESS, memberService.signUp(memberRegisterReguestDto));
     }
 
-    @DeleteMapping("/{id}")
-    public CommonResponse<?> deleteMember(@PathVariable long id) {
-
-        return CommonResponse.success(SuccessCode.DELETE_MEMBER_SUCCESS, memberService.deleteMember(id));
+    @DeleteMapping
+    public CommonResponse<?> deleteMember() {
+        return CommonResponse.success(SuccessCode.DELETE_MEMBER_SUCCESS, memberService.deleteMember());
     }
 }
