@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.AlreadyExistsEmailException;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.AlreadyExistsNicknameException;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.EmailNotFoundException;
-import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.InvalidMemberIdException;
 import online.palworldkorea.palworldkorea_online.global.util.MemberUtil;
 import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
@@ -25,7 +24,7 @@ public class MemberService {
     public MemberDto.Response signUp(MemberDto.RegisterReguest memberRegisterReguestDto) {
         checkIsEmailAlreadySignedUp(memberRegisterReguestDto.getEmail());
 
-        validateNickname(memberRegisterReguestDto.getNickname());
+        checkIsNicknameAlreadySignedUp(memberRegisterReguestDto.getNickname());
 
         Member member = memberRegisterReguestDto.toEntity(passwordEncoder);
 
@@ -54,7 +53,7 @@ public class MemberService {
         }
     }
 
-    private void validateNickname(String nickname) {
+    private void checkIsNicknameAlreadySignedUp(String nickname) {
         if (memberRepository.findByNickname(nickname)
                 .isPresent()) {
             throw new AlreadyExistsNicknameException();
