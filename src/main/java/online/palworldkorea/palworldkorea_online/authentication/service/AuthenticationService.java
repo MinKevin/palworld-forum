@@ -27,10 +27,7 @@ public class AuthenticationService {
 
         checkPassword(memberLoginRequestDto, member);
 
-        TokenDto tokenDto = new TokenDto(
-                jwtTokenUtil.generateRefreshToken(member.getEmail(), member.getAuthorities()),
-                jwtTokenUtil.generateAccessToken(member.getEmail(), member.getAuthorities())
-        );
+        TokenDto tokenDto = generateNewTokens(member);
 
         return memberMapper.toResponse(member, tokenDto);
     }
@@ -40,11 +37,19 @@ public class AuthenticationService {
 
         String email = jwtTokenUtil.getEmailFromToken(refreshToken);
         List<GrantedAuthority> authorities = jwtTokenUtil.getAuthoritiesFromToken(refreshToken);
+
         return new TokenDto(null, jwtTokenUtil.generateAccessToken(email, authorities));
     }
 
     private void checkPassword(MemberDto.LoginRequest memberLoginRequestDto, Member member) {
         if (!member.checkInputPasswordIsCorrect(memberLoginRequestDto.getPassword(), passwordEncoder))
             throw new InvalidPasswordException();
+    }
+
+    private TokenDto generateNewTokens(Member member) {
+        return new TokenDto(
+                jwtTokenUtil.generateRefreshToken(member.getEmail(), member.getAuthorities()),
+                jwtTokenUtil.generateAccessToken(member.getEmail(), member.getAuthorities())
+        );
     }
 }

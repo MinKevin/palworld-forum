@@ -3,6 +3,7 @@ package online.palworldkorea.palworldkorea_online.member.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "member")
 @SQLDelete(sql = "UPDATE member SET is_deleted = true where id = ?")
 @SQLRestriction("is_deleted is False")
 public class Member implements UserDetails {
@@ -31,6 +33,7 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
+    @ColumnDefault(value = "false")
     private boolean isDeleted;
 
     public Member(String email, String password, String nickname, MemberRole memberRole) {
@@ -56,7 +59,6 @@ public class Member implements UserDetails {
     }
 
     public boolean checkInputPasswordIsCorrect(String inputPassword, PasswordEncoder passwordEncoder) {
-
         return passwordEncoder.matches(inputPassword, this.password);
     }
 }
