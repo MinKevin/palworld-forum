@@ -1,33 +1,22 @@
 package online.palworldkorea.palworldkorea_online.post.announcement.dto;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.post.announcement.entity.Announcement;
+import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
+import online.palworldkorea.palworldkorea_online.post.common.dto.CommonPostDto;
 
 import java.util.List;
 
 public class AnnouncementDto {
     private AnnouncementDto(){}
 
-    @Setter
-    @Getter
-    public static class Request {
-        @NotNull
-        private String title;
-
-        @NotNull
-        private String content;
-
-        private List<String> attachments;
+    public static class Request extends CommonPostDto.Request {
+        @Override
+        public Announcement toEntity(Member author, List<Attachment> attachments) {
+            return new Announcement(author, super.getTitle(), super.getContent(), attachments);
+        }
     }
 
-    @Builder
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Response {
-        private String title;
-        private String content;
-        private List<String> attachments;
+    public static class Response extends CommonPostDto.Response {
     }
 }

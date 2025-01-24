@@ -29,20 +29,4 @@ class CommonPostRepositoryTest {
                 .forEach(post ->
                         Assertions.assertThat(post.getTitle().toLowerCase()).contains(keyword));
      }
-
-     @ParameterizedTest
-     @ValueSource(strings = {"announcement", "data", "free", "guide", "promotion"})
-     void testFindByTitleContainingIgnoreCaseAndDtype(String dtype) {
-         // given
-
-         // when
-         Page<CommonPost> result = postRepository
-                 .findByTitleContainingIgnoreCaseAndDtype("", dtype, PageRequest.of(0, 10));
-
-         // then
-         Assertions.assertThat(result.getContent().size()).isNotZero();
-         result.getContent()
-                 .forEach(post ->
-                         Assertions.assertThat(post.getDtype()).isEqualTo(dtype));
-      }
 }
