@@ -72,7 +72,7 @@ public abstract class CommonPostService<
         Member author = memberService.getMemberByEmail(MemberUtil.getEmail());
         List<Attachment> attachments = getAttachments(postRequestDto, author);
 
-        E post = (E)postRequestDto.toEntity(author, attachments);
+        E post = (E) postRequestDto.toEntity(author, attachments);
 
         postRepository.save(post);
 
@@ -102,24 +102,15 @@ public abstract class CommonPostService<
     }
 
     private List<E> getPostListByContent(String keyword, String dtype, Pageable pageable) {
-        if (dtype.equals("common"))
-            return postRepository.findByContentContainingIgnoreCase(keyword, pageable).getContent();
-
-        return postRepository.findByContentContainingIgnoreCaseAndDtype(keyword, dtype, pageable).getContent();
+        return postRepository.findByContentContainingIgnoreCase(keyword, pageable).getContent();
     }
 
     private List<E> getPostListByNickname(String keyword, String dtype, Pageable pageable) {
-        if (dtype.equals("common"))
-            return postRepository.findByAuthor_NicknameContainingIgnoreCase(keyword, pageable).getContent();
-
-        return postRepository.findByAuthor_NicknameContainingIgnoreCaseAndDtype(keyword, dtype, pageable).getContent();
+        return postRepository.findByAuthor_NicknameContainingIgnoreCase(keyword, pageable).getContent();
     }
 
     private List<E> getPostListByTitle(String keyword, String dtype, Pageable pageable) {
-        if (dtype.equals("common"))
-            return postRepository.findByTitleContainingIgnoreCase(keyword, pageable).getContent();
-
-        return postRepository.findByTitleContainingIgnoreCaseAndDtype(keyword, dtype, pageable).getContent();
+        return postRepository.findByTitleContainingIgnoreCase(keyword, pageable).getContent();
     }
 
     private E getPostById(long id) {
@@ -139,8 +130,8 @@ public abstract class CommonPostService<
     private List<Attachment> getAttachments(Q postRequestDto, Member author) {
         if (postRequestDto.getAttachments() != null)
             return postRequestDto.getAttachments().stream()
-                .map(attachmentRequestDto -> attachmentService.saveAttachment(author, attachmentRequestDto))
-                .toList();
+                    .map(attachmentRequestDto -> attachmentService.saveAttachment(author, attachmentRequestDto))
+                    .toList();
         else return null;
     }
 }

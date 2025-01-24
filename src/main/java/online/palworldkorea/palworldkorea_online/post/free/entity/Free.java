@@ -1,6 +1,6 @@
-package online.palworldkorea.palworldkorea_online.post.announcement.entity;
+package online.palworldkorea.palworldkorea_online.post.free.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.NoArgsConstructor;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
@@ -11,9 +11,8 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-public class Announcement extends CommonPost {
-    public Announcement(Member author, @NotBlank String title, @NotBlank String content, List<Attachment> attachments) {
+public class Free extends CommonPost {
+    public Free(Member author, @NotBlank String title, @NotBlank String content, List<Attachment> attachments) {
         super(author, title, content, attachments);
     }
-
 }
