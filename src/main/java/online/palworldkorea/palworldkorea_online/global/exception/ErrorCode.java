@@ -16,7 +16,10 @@ public enum ErrorCode {
     INVALID_MEMBER_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 유저 고유 번호(id) 입니다."),
     INVALID_POST_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 게시물 고유 번호(id) 입니다."),
     NOT_ENOUGH_PERMISSION_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 부족합니다."),
-    SAVE_ATTACHMENT_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 저장에 실패했습니다.")
+    SAVE_ATTACHMENT_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 저장에 실패했습니다."),
+    VERIFY_VERTIFICATION_CODE_FAILED(HttpStatus.BAD_REQUEST, "인증 번호가 일치하지 않습니다."),
+    VERIFICATION_CODE_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "인증 번호가 생성되지 않았거나, 유효 시간이 만료되었습니다."),
+    SEND_REPORT_EMAIL_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "신고/문의 이메일 전송에 실패했습니다."),
     ;
 
     private final HttpStatus status;

@@ -14,7 +14,9 @@ public enum SuccessCode {
     UPDATE_POST_SUCCESS(HttpStatus.ACCEPTED, "게시글 수정에 성공했습니다."),
     DELETE_POST_SUCCESS(HttpStatus.ACCEPTED, "게시글 삭제에 성공했습니다."),
     GET_POST_LIST_SUCCESS(HttpStatus.OK, "게시판 조회를 완료했습니다."),
-    ;
+    GENERATE_VERIFICATION_CODE_SUCCESS(HttpStatus.CREATED, "이메일로 인증 번호를 발송하였습니다."),
+    VERIFY_VERTIFICATION_CODE_SUCCESS(HttpStatus.ACCEPTED, "이메일 인증이 완료되었습니다."),
+    SEND_REPORT_TO_ADMIN_SUCCESS(HttpStatus.ACCEPTED, "신고 메일을 관리자에게 발송했습니다.");
 
     private final HttpStatus httpStatus;
     private final String reasonPhrase;

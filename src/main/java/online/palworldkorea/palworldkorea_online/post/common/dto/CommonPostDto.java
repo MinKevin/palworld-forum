@@ -8,6 +8,7 @@ import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentD
 import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import online.palworldkorea.palworldkorea_online.post.comment.dto.CommentDto;
 import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +25,7 @@ public class CommonPostDto {
         @NotBlank
         private String content;
 
-        private List<AttachmentDto.Request> attachments;
+        private List<MultipartFile> attachments;
 
 
         public  CommonPost toEntity(Member author, List<Attachment> attachments) {

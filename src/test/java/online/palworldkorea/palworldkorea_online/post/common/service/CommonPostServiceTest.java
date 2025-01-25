@@ -103,10 +103,6 @@ class CommonPostServiceTest {
         responses.forEach(response -> {
             Assertions.assertThat(response.getAuthor())
                     .contains(keyword);
-
-//            Assertions.assertThat(response.getDtype())
-//                    .isEqualTo(CommonPost.class.getSimpleName()
-//                                    .replaceFirst("Post", "").toLowerCase());
         });
     }
 
@@ -126,10 +122,6 @@ class CommonPostServiceTest {
         responses.forEach(response -> {
             Assertions.assertThat(response.getContent())
                     .contains(keyword);
-
-//            Assertions.assertThat(response.getDtype())
-//                    .isEqualTo(CommonPost.class.getSimpleName()
-//                                    .replaceFirst("Post", "").toLowerCase());
         });
     }
 

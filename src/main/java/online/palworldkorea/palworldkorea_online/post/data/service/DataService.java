@@ -2,7 +2,6 @@ package online.palworldkorea.palworldkorea_online.post.data.service;
 
 import online.palworldkorea.palworldkorea_online.member.service.MemberService;
 import online.palworldkorea.palworldkorea_online.post.attachment.service.AttachmentService;
-import online.palworldkorea.palworldkorea_online.post.common.repository.CommonPostRepository;
 import online.palworldkorea.palworldkorea_online.post.common.service.CommonPostService;
 import online.palworldkorea.palworldkorea_online.post.data.dto.DataDto;
 import online.palworldkorea.palworldkorea_online.post.data.entity.Data;

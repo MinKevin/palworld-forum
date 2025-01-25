@@ -9,6 +9,7 @@ import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
 import online.palworldkorea.palworldkorea_online.member.mapper.MemberMapper;
 import online.palworldkorea.palworldkorea_online.member.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${spring.mail.username}")
+    private String senderEmail;
 
     public MemberDto.Response signUp(MemberDto.RegisterReguest memberRegisterReguestDto) {
         checkIsEmailAlreadySignedUp(memberRegisterReguestDto.getEmail());
