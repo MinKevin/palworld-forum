@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.global.response.CommonResponse;
 import online.palworldkorea.palworldkorea_online.global.response.SuccessCode;
+import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.common.SearchType;
 import online.palworldkorea.palworldkorea_online.post.common.SortType;
 import online.palworldkorea.palworldkorea_online.post.common.dto.CommonPostDto;
@@ -11,6 +12,9 @@ import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 import online.palworldkorea.palworldkorea_online.post.common.mapper.CommonPostMapper;
 import online.palworldkorea.palworldkorea_online.post.common.service.CommonPostService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public abstract class CommonPostController<
@@ -27,20 +31,27 @@ public abstract class CommonPostController<
 
     @GetMapping
     public CommonResponse<?> searchPosts(@RequestParam(name = "searchType", defaultValue = "NICKNAME") SearchType searchType,
-            @RequestParam(name = "page", defaultValue = "1") int page,
+                                         @RequestParam(name = "page", defaultValue = "1") int page,
                                          @RequestParam(name = "limit", defaultValue = "10") int limit,
                                          @RequestParam(name = "keyword", defaultValue = "") String keyword,
-                                         @RequestParam(name = "sort", defaultValue = "RECENT")SortType sortType) {
+                                         @RequestParam(name = "sort", defaultValue = "RECENT") SortType sortType) {
         return CommonResponse.success(SuccessCode.GET_POST_LIST_SUCCESS, postService.searchPosts(searchType, page, limit, keyword, sortType));
     }
 
     @PostMapping
-    public CommonResponse<?> createPost(@RequestBody @Valid Q request) {
+    public CommonResponse<?> createPost(@RequestPart(name = "data") @Valid Q request,
+                                        @RequestPart(name = "attachments", required = false) List<MultipartFile> attachments) {
+        request.setAttachments(attachments);
+
         return CommonResponse.success(SuccessCode.POST_POST_SUCCESS, postService.createPost(request));
     }
 
     @PatchMapping("/{id}")
-    public CommonResponse<?> updatePost(@PathVariable(name = "id") long id, @RequestBody @Valid Q request) {
+    public CommonResponse<?> updatePost(@PathVariable(name = "id") long id,
+                                        @RequestPart(name = "data") @Valid Q request,
+                                        @RequestPart(name = "attachments", required = false) List<MultipartFile> attachments) {
+        request.setAttachments(attachments);
+
         return CommonResponse.success(SuccessCode.UPDATE_POST_SUCCESS, postService.updatePost(id, request));
     }
 

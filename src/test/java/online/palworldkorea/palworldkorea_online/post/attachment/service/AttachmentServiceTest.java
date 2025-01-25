@@ -4,11 +4,8 @@ import online.palworldkorea.palworldkorea_online.member.entity.Member;
 import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
-import online.palworldkorea.palworldkorea_online.post.attachment.repository.AttachmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +28,7 @@ class AttachmentServiceTest {
     private AttachmentService attachmentService;
 
     private Member author;
-    private AttachmentDto.Request attachmentRequestDto;
+    private MultipartFile attachment;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -47,13 +44,12 @@ class AttachmentServiceTest {
         when(multipartFile.getSize()).thenReturn(1024L);
         when(multipartFile.getInputStream()).thenReturn(mockInputStream);
 
-        attachmentRequestDto = new AttachmentDto.Request();
-        attachmentRequestDto.setAttachment(multipartFile);
+        attachment = multipartFile;
     }
 
     @Test
     void testSaveAttachment() {
-        Attachment attachment = attachmentService.saveAttachment(author, attachmentRequestDto);
+        Attachment attachment = attachmentService.saveAttachment(author, this.attachment);
 
         assert attachment.getAuthor() == author;
         assert attachment.getFileSize() == 1024L;

@@ -31,8 +31,7 @@ public class AttachmentService {
         System.out.println("Upload Directory: " + uploadDirectory);
     }
 
-    public Attachment saveAttachment(Member author, AttachmentDto.Request attachmentRequestDto) {
-        MultipartFile attachment = attachmentRequestDto.getAttachment();
+    public Attachment saveAttachment(Member author, MultipartFile attachment) {
         String fileName = generateUniqueFileName(attachment.getOriginalFilename());
         Path targetLocation = Path.of(uploadDirectory + fileName);
 

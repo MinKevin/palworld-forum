@@ -12,6 +12,10 @@ public class CommonResponse<T> {
     private String message;
     private T data;
 
+    public static <T> CommonResponse<T> success(SuccessCode successCode) {
+        return new CommonResponse<>(successCode.getHttpStatus(), successCode.getReasonPhrase(), null);
+    }
+
     public static <T> CommonResponse<T> success(SuccessCode successCode, T data) {
         return new CommonResponse<>(successCode.getHttpStatus(), successCode.getReasonPhrase(), data);
     }
