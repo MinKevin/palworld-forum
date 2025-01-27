@@ -1,11 +1,12 @@
 package online.palworldkorea.palworldkorea_online.authentication.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TokenDto {
-    private final String refreshToken;
-    private final String accessToken;
+    private String refreshToken;
+    private String accessToken;
 }

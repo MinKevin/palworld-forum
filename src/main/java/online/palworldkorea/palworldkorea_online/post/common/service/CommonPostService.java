@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public abstract class CommonPostService<
         Q extends CommonPostDto.Request,
         P extends CommonPostDto.Response,
         M extends CommonPostMapper<E, Q, P>> {
-    private final MemberService memberService;
+    protected final MemberService memberService;
     private final AttachmentService attachmentService;
     private final CommonPostRepository<E> postRepository;
     private final M postMapper;
@@ -70,9 +71,9 @@ public abstract class CommonPostService<
 
     public P createPost(Q postRequestDto) {
         Member author = memberService.getMemberByEmail(MemberUtil.getEmail());
-        List<Attachment> attachments = getAttachments(postRequestDto, author);
+        List<Attachment> attachments = attachmentService.getAttachments(postRequestDto.getAttachments(), author);
 
-        E post = (E) postRequestDto.toEntity(author, attachments);
+        E post = (E)postRequestDto.toEntity(author, attachments);
 
         postRepository.save(post);
 
@@ -125,13 +126,5 @@ public abstract class CommonPostService<
     private void hasEditPermission(E post) {
         if (!post.getAuthor().getEmail().equals(MemberUtil.getEmail()))
             throw new NotEnoughPermissionException();
-    }
-
-    private List<Attachment> getAttachments(Q postRequestDto, Member author) {
-        if (postRequestDto.getAttachments() != null)
-            return postRequestDto.getAttachments().stream()
-                    .map(attachmentRequestDto -> attachmentService.saveAttachment(author, attachmentRequestDto))
-                    .toList();
-        else return null;
     }
 }

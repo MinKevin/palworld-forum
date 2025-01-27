@@ -22,7 +22,7 @@ public class MemberDto {
         @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
         private String nickname;
 
-        private MemberRole memberRole = MemberRole.USER_LEVEL0;
+        private MemberRole memberRole = MemberRole.NORMAL;
 
         public Member toEntity(PasswordEncoder passwordEncoder) {
             return new Member(email, getEncodedPassword(passwordEncoder), nickname, memberRole);
@@ -50,5 +50,19 @@ public class MemberDto {
         private String nickname;
         private MemberRole memberRole;
         private TokenDto token;
+    }
+
+    @Getter
+    @Setter
+    public static class ChangeInfoReguest {
+        @Pattern(regexp = "^(?=.*[!@#$%^&*()_+\\-={}|\\[\\]:'\";<>?,./]).{8,16}$", message = "비밀번호는 8자 이상 16자 이하, 특수문자를 포함해야 합니다.")
+        private String password;
+
+        @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
+        private String nickname;
+
+        public String getEncodedPassword(PasswordEncoder passwordEncoder) {
+            return passwordEncoder.encode(password);
+        }
     }
 }

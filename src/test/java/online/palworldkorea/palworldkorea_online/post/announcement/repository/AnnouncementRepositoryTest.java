@@ -23,7 +23,7 @@ class AnnouncementRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Member member = new Member("test@gmail.com", "pwd", "nick", MemberRole.USER_LEVEL0);
+        Member member = new Member("test@gmail.com", "pwd", "nick", MemberRole.NORMAL);
         memberRepository.save(member);
         Announcement announcement = new Announcement(member, "title", "content", null);
         announcementRepository.save(announcement);

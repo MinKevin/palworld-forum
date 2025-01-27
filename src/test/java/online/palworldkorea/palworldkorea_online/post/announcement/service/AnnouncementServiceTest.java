@@ -1,9 +1,10 @@
 package online.palworldkorea.palworldkorea_online.post.announcement.service;
 
 import online.palworldkorea.palworldkorea_online.global.TestFixture;
-import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.NotEnoughPermissionException;
+import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.AccessDeniedException;
 import online.palworldkorea.palworldkorea_online.global.util.MemberUtil;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.member.repository.MemberRepository;
 import online.palworldkorea.palworldkorea_online.post.announcement.dto.AnnouncementDto;
 import online.palworldkorea.palworldkorea_online.post.announcement.entity.Announcement;
@@ -35,13 +36,15 @@ class AnnouncementServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    private Member testMember;
+    private Member testMember, anotherMember;
     private Announcement testPost;
 
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
-        testMember = new Member("test@domain.com", "password", "testuser", null);
+        testMember = new Member("test@domain.com", "password", "testuser", MemberRole.ADMIN);
+        anotherMember = new Member("another@email.com", "password", "testuser", MemberRole.NORMAL);
         memberRepository.save(testMember);
+        memberRepository.save(anotherMember);
 
         testPost = new Announcement(testMember, "Test Title", "Test Content", null);
         repository.save(testPost);
@@ -172,7 +175,7 @@ class AnnouncementServiceTest {
             // then
             Assertions.assertThatThrownBy(
                     () -> service.updatePost(testPost.getId(), updateDto)
-            ).isInstanceOf(NotEnoughPermissionException.class);
+            ).isInstanceOf(AccessDeniedException.class);
         }
     }
 
@@ -212,7 +215,7 @@ class AnnouncementServiceTest {
 
             // then
             Assertions.assertThatThrownBy(() -> service.deletePost(newPostResponse.getId()))
-                    .isInstanceOf(NotEnoughPermissionException.class);
+                    .isInstanceOf(AccessDeniedException.class);
         }
     }
 }

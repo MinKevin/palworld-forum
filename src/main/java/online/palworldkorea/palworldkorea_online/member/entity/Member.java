@@ -1,6 +1,7 @@
 package online.palworldkorea.palworldkorea_online.member.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -60,5 +61,17 @@ public class Member implements UserDetails {
 
     public boolean checkInputPasswordIsCorrect(String inputPassword, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(inputPassword, this.password);
+    }
+
+    public void changeMemberRole(MemberRole memberRole) {
+        this.memberRole = memberRole;
+    }
+
+    public void updatePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

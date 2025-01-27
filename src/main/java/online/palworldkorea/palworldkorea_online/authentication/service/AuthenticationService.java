@@ -32,7 +32,9 @@ public class AuthenticationService {
         return memberMapper.toResponse(member, tokenDto);
     }
 
-    public TokenDto refreshAccessToken(String refreshToken) {
+    public TokenDto refreshAccessToken(TokenDto tokenDto) {
+        String refreshToken = tokenDto.getRefreshToken();
+
         jwtTokenUtil.validateToken(refreshToken);
 
         String email = jwtTokenUtil.getEmailFromToken(refreshToken);
