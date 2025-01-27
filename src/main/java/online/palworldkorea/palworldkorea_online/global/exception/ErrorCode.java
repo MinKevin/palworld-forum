@@ -20,6 +20,9 @@ public enum ErrorCode {
     VERIFY_VERTIFICATION_CODE_FAILED(HttpStatus.BAD_REQUEST, "인증 번호가 일치하지 않습니다."),
     VERIFICATION_CODE_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "인증 번호가 생성되지 않았거나, 유효 시간이 만료되었습니다."),
     SEND_REPORT_EMAIL_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "신고/문의 이메일 전송에 실패했습니다."),
+    INVALID_LINK_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "link-type을 입력해주세요."),
+    ACCESS_DENIED_EXCEPTION(HttpStatus.BAD_REQUEST, "권한이 부족합니다."),
+    INVALID_INTEGRATED_LINK_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 통합 게시판 링크 ID 입니다."),
     ;
 
     private final HttpStatus status;

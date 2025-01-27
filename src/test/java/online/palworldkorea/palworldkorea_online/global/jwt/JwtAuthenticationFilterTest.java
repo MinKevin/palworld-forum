@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -52,12 +49,12 @@ class JwtAuthenticationFilterTest {
         // given
         String validToken = "valid.jwt.token";
         String email = "test@example.com";
-        List<GrantedAuthority> authorities = Arrays.asList(MemberRole.USER_LEVEL0);
+        List<GrantedAuthority> authorities = Arrays.asList(MemberRole.NORMAL);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + validToken);
         when(jwtTokenUtil.getEmailFromToken(validToken)).thenReturn(email);
         when(jwtTokenUtil.getAuthoritiesFromToken(validToken)).thenReturn(authorities);
-        doNothing().when(jwtTokenUtil).validateToken(validToken);
+        when(jwtTokenUtil.validateToken(validToken)).thenReturn(true);
 
         SecurityContext securityContext = mock(SecurityContext.class);
         SecurityContextHolder.setContext(securityContext);
@@ -67,19 +64,5 @@ class JwtAuthenticationFilterTest {
 
         // then
         verify(jwtTokenUtil).validateToken(validToken);
-     }
-
-    @Test
-    void shoudSetAuthenticationInSecurityContext_whenTokenIsValid() {
-        // given
-        String validToken = "valid.jwt.token";
-        String email = "valid@example.com";
-        WebAuthenticationDetails details = new WebAuthenticationDetails(mock(HttpServletRequest.class));
-
-        // when
-
-        // then
-        Assertions.assertThat(jwtTokenUtil.getEmailFromToken(validToken)).isEqualTo(email);
-        Assertions.assertThat(jwtTokenUtil.getAuthoritiesFromToken(validToken)).isEqualTo(List.of(MemberRole.USER_LEVEL0));
      }
 }

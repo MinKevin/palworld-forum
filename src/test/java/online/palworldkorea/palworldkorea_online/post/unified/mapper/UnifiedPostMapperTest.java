@@ -2,8 +2,6 @@ package online.palworldkorea.palworldkorea_online.post.unified.mapper;
 
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
 import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
-import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
-import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import online.palworldkorea.palworldkorea_online.post.comment.dto.CommentDto;
 import online.palworldkorea.palworldkorea_online.post.comment.entity.Comment;
 import online.palworldkorea.palworldkorea_online.post.common.dto.CommonPostDto;
@@ -12,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,11 @@ class UnifiedPostMapperTest {
     private String email = "author@example.com";
     private String password = "password";
     private String nickname = "authorNickname";
-    private MemberRole memberRole = MemberRole.USER_LEVEL0;
+    private MemberRole memberRole = MemberRole.NORMAL;
 
     private String title = "Post Title";
     private String content = "Post Content";
-    private List<AttachmentDto.Request> attachments = null;
+    private List<MultipartFile> attachments = null;
 
     @Test
     void testToResponse() {

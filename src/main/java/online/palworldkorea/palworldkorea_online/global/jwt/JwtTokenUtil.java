@@ -28,7 +28,7 @@ public class JwtTokenUtil {
 
     public String generateAccessToken( String email, List<GrantedAuthority> authorities) {
         Date expiration = new Date(new Date().getTime() + accessTokenExpirationTime);
-        Key key = getKey();
+        SecretKey key = getKey();
 
         return generateNewToken(email, authorities, expiration, key);
     }
@@ -36,7 +36,7 @@ public class JwtTokenUtil {
     public String generateRefreshToken(String email, List<GrantedAuthority> authorities) {
         Date expiration = new Date(new Date().getTime() + refreshTokenExpirationTime);
 
-        Key key = getKey();
+        SecretKey key = getKey();
 
         return generateNewToken(email, authorities, expiration, key);
     }
@@ -45,7 +45,7 @@ public class JwtTokenUtil {
         SecretKey key = getKey();
 
         Date expiration = getPayload(key, token).getExpiration();
-        if (expiration.before(new Date()))
+        if (expiration.before(new Date(System.currentTimeMillis())))
             throw new InvalidTokenException();
 
         return true;
@@ -70,13 +70,13 @@ public class JwtTokenUtil {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    private String generateNewToken(String email, List<GrantedAuthority> authorities, Date expiration, Key key) {
+    private String generateNewToken(String email, List<GrantedAuthority> authorities, Date expiration, SecretKey key) {
         List<String> authoritiesStrings = authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
         return Jwts.builder()
-                .issuedAt(new Date())
+                .issuedAt(new Date(System.currentTimeMillis()))
                 .subject(email)
                 .claim("authorities", authoritiesStrings)
                 .expiration(expiration)
@@ -92,6 +92,7 @@ public class JwtTokenUtil {
                     .parseSignedClaims(token)
                     .getPayload();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new InvalidTokenException();
         }
     }

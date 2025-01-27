@@ -2,7 +2,6 @@ package online.palworldkorea.palworldkorea_online.post.attachment.service;
 
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
 import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
-import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Transactional
-@TestPropertySource(locations = "classpath:application-test.yaml")
+@TestPropertySource(locations = "classpath:application.yaml")
 class AttachmentServiceTest {
     @Autowired
     private AttachmentService attachmentService;
@@ -34,7 +33,7 @@ class AttachmentServiceTest {
     void setUp() throws IOException {
         MockitoAnnotations.openMocks(this);
 
-        author = new Member("test@test.com", "123", "testNick", MemberRole.USER_LEVEL0);
+        author = new Member("test@test.com", "123", "testNick", MemberRole.NORMAL);
 
         MultipartFile multipartFile = mock(MultipartFile.class);
         InputStream mockInputStream = new ByteArrayInputStream("test data".getBytes());

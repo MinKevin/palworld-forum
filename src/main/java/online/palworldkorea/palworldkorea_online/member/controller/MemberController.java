@@ -19,6 +19,11 @@ public class MemberController {
         return CommonResponse.success(SuccessCode.REGISTER_MEMBER_SUCCESS, memberService.signUp(memberRegisterReguestDto));
     }
 
+    @PatchMapping
+    public CommonResponse<?> changeInfo(@RequestBody MemberDto.ChangeInfoReguest memberChangeInfoReguestDto) {
+        return CommonResponse.success(SuccessCode.CHANGE_PASSWORD_SUCCESS, memberService.changeInfo(memberChangeInfoReguestDto));
+    }
+
     @DeleteMapping
     public CommonResponse<?> deleteMember() {
         return CommonResponse.success(SuccessCode.DELETE_MEMBER_SUCCESS, memberService.deleteMember());

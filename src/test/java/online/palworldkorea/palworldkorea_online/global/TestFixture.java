@@ -8,7 +8,6 @@ import org.hibernate.Hibernate;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TestFixture {
@@ -17,7 +16,7 @@ public class TestFixture {
 
         for (int i = 0; i < 10; i++) {
             String email = "member" + i + "@palworldkorea.com";
-            Member member = new Member(email, "password" + i, "nickname" + i, MemberRole.USER_LEVEL0);
+            Member member = new Member(email, "password" + i, "nickname" + i, MemberRole.NORMAL);
             members.add(member);
         }
 

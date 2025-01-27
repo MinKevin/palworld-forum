@@ -2,10 +2,8 @@ package online.palworldkorea.palworldkorea_online.post.attachment.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.SaveAttachmentFailedException;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
-import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import online.palworldkorea.palworldkorea_online.post.attachment.repository.AttachmentRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +14,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -26,13 +28,8 @@ public class AttachmentService {
     @Value("${file.upload-dir}")
     private String uploadDirectory;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Upload Directory: " + uploadDirectory);
-    }
-
     public Attachment saveAttachment(Member author, MultipartFile attachment) {
-        String fileName = generateUniqueFileName(attachment.getOriginalFilename());
+        String fileName = generateUniqueFileName(Objects.requireNonNull(attachment.getOriginalFilename()));
         Path targetLocation = Path.of(uploadDirectory + fileName);
 
         saveAttachmentToLocal(attachment, targetLocation);
@@ -41,6 +38,19 @@ public class AttachmentService {
         attachmentRepository.save(attachmentEntity);
 
         return attachmentEntity;
+    }
+
+    public List<Attachment> getAttachments(List<MultipartFile> multipartFiles, Member author) {
+        if (multipartFiles == null)
+            return new ArrayList<>();
+
+        return multipartFiles.stream()
+                .map(multipartFile -> saveAttachment(author, multipartFile))
+                .toList();
+    }
+
+    public void deleteAttachments(List<Attachment> attachments) {
+        attachmentRepository.deleteAll(attachments);
     }
 
     private String generateUniqueFileName(String originalFilename) {

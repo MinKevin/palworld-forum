@@ -3,6 +3,7 @@ package online.palworldkorea.palworldkorea_online.post.attachment.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import online.palworldkorea.palworldkorea_online.admin.common.entity.CommonAdmin;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
 import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 
@@ -25,6 +26,10 @@ public class Attachment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")  // 외래 키 컬럼 이름
     private CommonPost post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "commonAdmin_id")
+    private CommonAdmin commonAdmin;
 
     public Attachment(Member member, String fileName, String contentType, long size, String string) {
         this.author = member;
