@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.email.dto.EmailVerificationDto;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.SendReportEmailFailedException;
 import online.palworldkorea.palworldkorea_online.global.util.MemberUtil;
+import online.palworldkorea.palworldkorea_online.member.service.MemberService;
 import online.palworldkorea.palworldkorea_online.report.dto.ReportDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,11 +24,14 @@ import java.util.Objects;
 public class EmailService {
     private final VerificationCodeService verificationCodeService;
     private final JavaMailSender emailSender;
+    private final MemberService memberService;
 
     @Value("${spring.mail.username}")
     private String adminEmail;
 
     public void sendVerificationCode(EmailVerificationDto.Request emailVerificationRequestDto) {
+        memberService.checkIsEmailAlreadySignedUp(emailVerificationRequestDto.getEmail());
+
         SimpleMailMessage message = makeMailMessage(emailVerificationRequestDto.getEmail());
 
         emailSender.send(message);
@@ -38,11 +42,9 @@ public class EmailService {
 
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-
             messageHelper.setTo(adminEmail);
             messageHelper.setSubject(reportRequestDto.getTitle());
-            messageHelper.setText(reportRequestDto.getContent(), true);
-            messageHelper.setFrom(MemberUtil.getEmail());
+            messageHelper.setText(MemberUtil.getEmail() + "\n\n" + reportRequestDto.getContent(), true);
 
             List<MultipartFile> attachments = reportRequestDto.getAttachments();
             if (attachments != null) {

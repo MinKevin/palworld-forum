@@ -49,7 +49,7 @@ class JwtAuthenticationFilterTest {
         // given
         String validToken = "valid.jwt.token";
         String email = "test@example.com";
-        List<GrantedAuthority> authorities = Arrays.asList(MemberRole.NORMAL);
+        List<MemberRole> authorities = Arrays.asList(MemberRole.NORMAL);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + validToken);
         when(jwtTokenUtil.getEmailFromToken(validToken)).thenReturn(email);

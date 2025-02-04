@@ -10,6 +10,12 @@ public class AttachmentDto {
 
     @Getter
     @Setter
+    public static class Request {
+        private String filePath;
+    }
+
+    @Getter
+    @Setter
     public static class Response {
         @ManyToOne(fetch = FetchType.EAGER)
         private String author;

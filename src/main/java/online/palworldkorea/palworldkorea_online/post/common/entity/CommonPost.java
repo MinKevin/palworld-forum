@@ -50,24 +50,26 @@ public class CommonPost extends BaseTimeEntity {
     @ColumnDefault(value = "false")
     private boolean isDeleted;
 
-    public CommonPost(Member author, @NotBlank String title, @NotBlank String content, List<Attachment> attachments) {
+    public CommonPost(Member author, @NotBlank String title, @NotBlank String content) {
         this.author = author;
         this.title = title;
         this.content = content;
-        this.attachments = attachments;
     }
 
     public <Q extends CommonPostDto.Request> void update(Q postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
-//        this.attachments = postRequestDto.getAttachments();
     }
 
     public void increaseHit() {
         this.hits++;
     }
 
-    public CommonPostDto.Response toResponseDtoWithoutComments() {
-        return null;
+    public void increateCountOfComments() {
+        this.countOfComments++;
+    }
+
+    public void decreaseCountOfComments() {
+        this.countOfComments--;
     }
 }

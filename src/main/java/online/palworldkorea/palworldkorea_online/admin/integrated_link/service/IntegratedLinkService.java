@@ -21,8 +21,6 @@ public class IntegratedLinkService {
     private final IntegratedLinkMapper integratedLinkMapper;
 
     public List<IntegratedLinkDto.Response> getIntegratedLinks() {
-        memberService.validateIsAdmin();
-
         return integratedLinkRepository.findAll().stream()
                 .map(integratedLinkMapper::toResponse)
                 .toList();

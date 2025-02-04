@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
+    @GetMapping
+    public CommonResponse<?> getMember() {
+        return CommonResponse.success(SuccessCode.GET_MEMBER_SUCCESS, memberService.getMember());
+    }
+
     @PostMapping
     public CommonResponse<?> signUp(@RequestBody @Valid MemberDto.RegisterReguest memberRegisterReguestDto) {
         return CommonResponse.success(SuccessCode.REGISTER_MEMBER_SUCCESS, memberService.signUp(memberRegisterReguestDto));

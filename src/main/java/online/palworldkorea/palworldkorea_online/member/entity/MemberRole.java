@@ -10,18 +10,18 @@ public enum MemberRole implements GrantedAuthority {
     ADMIN("운영자", 0),
     PARTNER("파트너", 0),
 
-    NORMAL("일반", 0),
-    EXTRA_ORDINARY("비범", 70),
-    RARE("희귀", 180),
+    LEGENDARY("전설", 700),
     HEROIC("영웅", 360),
-    LEGENDARY("전설", 700);
+    RARE("희귀", 180),
+    EXTRA_ORDINARY("비범", 70),
+    NORMAL("일반", 0);
 
 
-    private final String name;
+    private final String korean;
     private final int criteria;
 
     @Override
     public String getAuthority() {
-        return this.name();
+        return name();
     }
 }

@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: palworldkorea-online
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
+
+  local:
+    server:
+      port: 8080
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kofiqa001@gmail.com
+    password: ixgj gwyt pkwd vvgj
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 500MB
+
+jwt:
+  secretKey: "21a40763c19d19530bd61df65676af7c632a07c6cd09fe337143a260dca65a3de7bdd8d292b22807cbf4bb5920b48b8c60be0102ee727fd88ebbad3512dcde045317b083b574beddf245ed78155ecdf3b14cfb1da7d6c4c843c159e529e1ef73ab8b6bda021c488bd1fdfd5c63d81174fe24b9dbe26c98573de309f921f007785ffa2d619770281e298f4591a78ae8c158e46f2f41cfb88b264d24455007fa4edc49f21c531e7383f13df9225f8d93880d47c484be3c7a0e5c81f1afefc6e04635f0d8f32e15cf688f811fe54bb59f85ba81b8605c8b690634ebac77fe5ea74bef40768fbda3bf225e62e763835b8d48b72981c3414c78b39f5e617c017035d6"
+  accessTokenExpirationTime: 900_000 # 15 * (60 * 1000) # 15분
+  refreshTokenExpirationTime: 2_592_000_000 # 30 * (24 * 60 * 60 * 1000) # 30일
+
+file:
+  upload-dir: /upload/
+

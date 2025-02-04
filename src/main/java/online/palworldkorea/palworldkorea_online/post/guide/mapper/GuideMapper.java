@@ -5,6 +5,6 @@ import online.palworldkorea.palworldkorea_online.post.guide.dto.GuideDto;
 import online.palworldkorea.palworldkorea_online.post.guide.entity.Guide;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", config= CommonPostMapper.class)
 public interface GuideMapper extends CommonPostMapper<Guide, GuideDto.Request, GuideDto.Response> {
 }

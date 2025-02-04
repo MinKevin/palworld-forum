@@ -29,7 +29,6 @@ public class AuthenticationController {
 
     @PostMapping("/refresh-token")
     public CommonResponse<?> refreshAccessToken(@RequestBody TokenDto tokenDto) {
-        System.out.println(tokenDto.getRefreshToken());
         return CommonResponse.success(SuccessCode.REFRESH_ACCESS_TOKEN_SUCCESS, authenticationService.refreshAccessToken(tokenDto));
     }
 

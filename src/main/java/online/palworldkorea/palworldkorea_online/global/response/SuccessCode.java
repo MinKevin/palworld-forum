@@ -31,6 +31,11 @@ public enum SuccessCode {
     DELETE_COALITION_SUCCESS(HttpStatus.ACCEPTED, "제휴 업체 삭제에 성공했습니다."),
     CHANGE_PASSWORD_SUCCESS(HttpStatus.ACCEPTED, "비밀 번호 변경에 성공했습니다."),
     CHANGE_NICKNAME_SUCCESS(HttpStatus.ACCEPTED, "닉네임 변경에 성공했습니다."),
+    UPDATE_COMMENT_SUCCESS(HttpStatus.ACCEPTED, "댓글 최신화에 성공했습니다."),
+    DELETE_COMMENT_SUCCESS(HttpStatus.ACCEPTED, "댓글 삭제에 성공했습니다."),
+    GET_MEMBER_SUCCESS(HttpStatus.OK, "회원 정보 조회에 성공했습니다."),
+    SAVE_ATTACHMENT_SUCCESS(HttpStatus.OK, "이미지 저장에 성공했습니다."),
+    DELETE_ATTACHMENT_SUCCESS(HttpStatus.ACCEPTED, "이미지 삭제에 성공했습니다."),
     ;
 
     private final HttpStatus httpStatus;

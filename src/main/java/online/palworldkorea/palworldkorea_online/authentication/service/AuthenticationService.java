@@ -6,6 +6,7 @@ import online.palworldkorea.palworldkorea_online.global.exception.custom_excepti
 import online.palworldkorea.palworldkorea_online.global.jwt.JwtTokenUtil;
 import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.member.mapper.MemberMapper;
 import online.palworldkorea.palworldkorea_online.member.service.MemberService;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +39,7 @@ public class AuthenticationService {
         jwtTokenUtil.validateToken(refreshToken);
 
         String email = jwtTokenUtil.getEmailFromToken(refreshToken);
-        List<GrantedAuthority> authorities = jwtTokenUtil.getAuthoritiesFromToken(refreshToken);
+        List<MemberRole> authorities = jwtTokenUtil.getAuthoritiesFromToken(refreshToken);
 
         return new TokenDto(null, jwtTokenUtil.generateAccessToken(email, authorities));
     }

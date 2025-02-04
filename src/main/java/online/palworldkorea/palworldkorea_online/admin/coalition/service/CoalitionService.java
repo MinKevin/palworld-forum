@@ -27,19 +27,17 @@ public class CoalitionService {
     private final CoalitionMapper coalitionMapper;
 
     public List<CoalitionDto.Response> getCoalitions() {
-        memberService.validateIsAdmin();
-
         return coalitionRepository.findAll().stream()
                 .map(coalitionMapper::toResponse)
                 .toList();
     }
 
     public CoalitionDto.Response updateCoalition(CoalitionDto.Request coalitionRequestDto) {
-        Member admin = memberService.validateIsAdmin();
+        memberService.validateIsAdmin();
 
         Coalition coalition = getCoalitionEntity(coalitionRequestDto.getId());
 
-        Attachment attachment = attachmentService.saveAttachment(admin, coalitionRequestDto.getAttachment());
+        Attachment attachment = attachmentService.saveAttachment(coalitionRequestDto.getAttachment());
 
         coalition.update(coalitionRequestDto.getName(), attachment);
 

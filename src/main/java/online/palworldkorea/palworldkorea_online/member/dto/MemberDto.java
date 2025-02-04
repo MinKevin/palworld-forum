@@ -19,7 +19,7 @@ public class MemberDto {
         @Pattern(regexp = "^(?=.*[!@#$%^&*()_+\\-={}|\\[\\]:'\";<>?,./]).{8,16}$", message = "비밀번호는 8자 이상 16자 이하, 특수문자를 포함해야 합니다.")
         private String password;
 
-        @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
+        @Pattern(regexp = "^[ㄱ-ㅎ가-힣A-Za-z0-9-_]{2,15}$", message = "닉네임은 특수문자를 제외한 2~15자리여야 합니다.")
         private String nickname;
 
         private MemberRole memberRole = MemberRole.NORMAL;
@@ -46,6 +46,7 @@ public class MemberDto {
     @Getter
     @Setter
     public static class Response {
+        private Long id;
         private String email;
         private String nickname;
         private MemberRole memberRole;
@@ -58,7 +59,7 @@ public class MemberDto {
         @Pattern(regexp = "^(?=.*[!@#$%^&*()_+\\-={}|\\[\\]:'\";<>?,./]).{8,16}$", message = "비밀번호는 8자 이상 16자 이하, 특수문자를 포함해야 합니다.")
         private String password;
 
-        @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
+        @Pattern(regexp = "^[ㄱ-ㅎ가-힣A-Za-z0-9-_]{2,15}$", message = "닉네임은 특수문자를 제외한 2~15자리여야 합니다.")
         private String nickname;
 
         public String getEncodedPassword(PasswordEncoder passwordEncoder) {
