@@ -48,9 +48,8 @@ class AttachmentServiceTest {
 
     @Test
     void testSaveAttachment() {
-        Attachment attachment = attachmentService.saveAttachment(author, this.attachment);
+        Attachment attachment = attachmentService.saveAttachment(this.attachment);
 
-        assert attachment.getAuthor() == author;
         assert attachment.getFileSize() == 1024L;
         assert attachment.getFileType().equals("image/png");
     }

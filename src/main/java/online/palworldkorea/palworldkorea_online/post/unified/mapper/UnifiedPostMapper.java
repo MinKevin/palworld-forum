@@ -5,6 +5,6 @@ import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 import online.palworldkorea.palworldkorea_online.post.common.mapper.CommonPostMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", config= CommonPostMapper.class)
 public interface UnifiedPostMapper extends CommonPostMapper<CommonPost, CommonPostDto.Request, CommonPostDto.Response> {
 }

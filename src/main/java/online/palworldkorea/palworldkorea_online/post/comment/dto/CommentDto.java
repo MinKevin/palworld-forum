@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.post.comment.entity.Comment;
 import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 
@@ -28,6 +29,8 @@ public class CommentDto {
     public static class Response {
         private long id;
         private String author;
+        private MemberRole memberRole;
+        private String nickname;
         private String content;
         private List<Response> childComments;
     }

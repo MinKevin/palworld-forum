@@ -24,24 +24,34 @@ public class CommonAdminService {
     private final CommonAdminMapper commonAdminMapper;
 
     public CommonAdminDto.Response getCommonAdminInventory(AdminInventoryType adminInventoryType) {
-        memberService.validateIsAdmin();
-
         CommonAdmin commonAdmin = getCommonAdminEntity(adminInventoryType);
 
         return commonAdminMapper.toResponse(commonAdmin);
     }
 
-    public CommonAdminDto.Response updateAdminInventory(CommonAdminDto.Request commonAdminRequestDto) {
+    public CommonAdminDto.Response updateAdminInventoryV1(CommonAdminDto.Request commonAdminRequestDto, AdminInventoryType adminInventoryType) {
         memberService.validateIsAdmin();
 
-        CommonAdmin commonAdmin = getCommonAdminEntity(commonAdminRequestDto.getAdminInventoryType());
-        Member author = memberService.getMemberByEmail(MemberUtil.getEmail());
+        CommonAdmin commonAdmin = getCommonAdminEntity(adminInventoryType);
 
         attachmentService.deleteAttachments(commonAdmin.getAttachments());
 
-        List<Attachment> attachments = attachmentService.getAttachments(commonAdminRequestDto.getAttachments(), author);
+        List<Attachment> attachments = attachmentService.getAttachments(commonAdminRequestDto.getAttachments());
 
         commonAdmin.update(commonAdminRequestDto.getContent(), attachments);
+
+        commonAdminRepository.save(commonAdmin);
+
+        return commonAdminMapper.toResponse(commonAdmin);
+    }
+
+    public CommonAdminDto.Response updateAdminInventoryV2(CommonAdminDto.Request commonAdminRequestDto, AdminInventoryType adminInventoryType) {
+        memberService.validateIsAdmin();
+
+        CommonAdmin commonAdmin = getCommonAdminEntity(adminInventoryType);
+
+        commonAdmin.update(commonAdminRequestDto.getContent(), null);
+
         commonAdminRepository.save(commonAdmin);
 
         return commonAdminMapper.toResponse(commonAdmin);

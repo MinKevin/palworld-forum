@@ -23,6 +23,9 @@ public enum ErrorCode {
     INVALID_LINK_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "link-type을 입력해주세요."),
     ACCESS_DENIED_EXCEPTION(HttpStatus.BAD_REQUEST, "권한이 부족합니다."),
     INVALID_INTEGRATED_LINK_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 통합 게시판 링크 ID 입니다."),
+    INVALID_COMMENT_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 댓글 ID 입니다."),
+    INVALID_ATTACHMENT_ID_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이미지 ID입니다."),
+    DELETE_ATTACHMENT_FAILED_EXCEPTION(HttpStatus.BAD_REQUEST, "이미지 파일 삭제에 실패했습니다."),
     ;
 
     private final HttpStatus status;

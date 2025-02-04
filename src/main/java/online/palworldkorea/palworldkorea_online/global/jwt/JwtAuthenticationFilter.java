@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.InvalidAccessTokenException;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +30,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwtTokenUtil.validateToken(token);
 
             String email = jwtTokenUtil.getEmailFromToken(token);
-            List<GrantedAuthority> authorities = jwtTokenUtil.getAuthoritiesFromToken(token);
+            List<MemberRole> authorities = jwtTokenUtil.getAuthoritiesFromToken(token);
             UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(email, authorities);
+
+            for (MemberRole authority : authorities) {
+                System.out.println(authority.getAuthority());
+            }
 
             WebAuthenticationDetails details = new WebAuthenticationDetails(request);
             authenticationToken.setDetails(details);
@@ -50,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         throw new InvalidAccessTokenException();
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationToken(String email, List<GrantedAuthority> authorities) {
+    private UsernamePasswordAuthenticationToken getAuthenticationToken(String email, List<MemberRole> authorities) {
         return new UsernamePasswordAuthenticationToken(
                 email,
                 null,

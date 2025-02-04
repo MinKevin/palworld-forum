@@ -1,10 +1,10 @@
 package online.palworldkorea.palworldkorea_online.admin.member_management.service;
 
 import lombok.RequiredArgsConstructor;
+import online.palworldkorea.palworldkorea_online.admin.member_management.dto.AdminMemberDto;
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.InvalidMemberIdException;
 import online.palworldkorea.palworldkorea_online.member.dto.MemberDto;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
-import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.member.mapper.MemberMapper;
 import online.palworldkorea.palworldkorea_online.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -36,10 +36,10 @@ public class AdminMemberService {
                 .orElseThrow(InvalidMemberIdException::new);
     }
 
-    public MemberDto.Response updateMemberRole(long id, MemberRole memberRole) {
+    public MemberDto.Response updateMemberRole(long id, AdminMemberDto.Request adminMemberRequestDto) {
         Member member = getMemberById(id);
 
-        member.changeMemberRole(memberRole);
+        member.changeMemberRole(adminMemberRequestDto.getMemberRole());
 
         return memberMapper.toResponse(member);
     }

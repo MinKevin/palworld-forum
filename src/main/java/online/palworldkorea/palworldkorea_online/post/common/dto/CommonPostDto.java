@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import online.palworldkorea.palworldkorea_online.post.comment.dto.CommentDto;
@@ -28,8 +29,8 @@ public class CommonPostDto {
         private List<MultipartFile> attachments;
 
 
-        public  CommonPost toEntity(Member author, List<Attachment> attachments) {
-            return new CommonPost(author, this.title, this.content, attachments);
+        public  CommonPost toEntity(Member author) {
+            return new CommonPost(author, this.title, this.content);
         }
     }
 
@@ -40,6 +41,7 @@ public class CommonPostDto {
         private String dtype;
         private String author;
         private String nickname;
+        private MemberRole memberRole;
         private String title;
         private String content;
         private List<AttachmentDto.Response> attachments;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -34,6 +35,9 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommonPost> posts;
+
     @ColumnDefault(value = "false")
     private boolean isDeleted;
 
@@ -45,8 +49,8 @@ public class Member implements UserDetails {
     }
 
     @Override
-    public List<GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(memberRole.name()));
+    public List<MemberRole> getAuthorities() {
+        return List.of(memberRole);
     }
 
     @Override
@@ -73,5 +77,9 @@ public class Member implements UserDetails {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateMemberRole(MemberRole memberRole) {
+        this.memberRole = memberRole;
     }
 }

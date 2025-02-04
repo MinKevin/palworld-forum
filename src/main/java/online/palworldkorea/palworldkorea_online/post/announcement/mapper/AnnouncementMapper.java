@@ -5,6 +5,6 @@ import online.palworldkorea.palworldkorea_online.post.announcement.entity.Announ
 import online.palworldkorea.palworldkorea_online.post.common.mapper.CommonPostMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", config= CommonPostMapper.class)
 public interface AnnouncementMapper extends CommonPostMapper<Announcement, AnnouncementDto.Request, AnnouncementDto.Response> {
 }

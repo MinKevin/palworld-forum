@@ -1,6 +1,7 @@
 package online.palworldkorea.palworldkorea_online.post.comment.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import online.palworldkorea.palworldkorea_online.global.domain.BaseTimeEntity;
@@ -23,7 +24,7 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private Member author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private CommonPost post;
@@ -41,9 +42,13 @@ public class Comment extends BaseTimeEntity {
     private boolean isDeleted;
 
     public Comment(Member author, CommonPost post, String content, Comment parent) {
-        this.member = author;
+        this.author = author;
         this.post = post;
         this.content = content;
         this.parent = parent;
+    }
+
+    public void updateContent(@NotBlank String content) {
+        this.content = content;
     }
 }

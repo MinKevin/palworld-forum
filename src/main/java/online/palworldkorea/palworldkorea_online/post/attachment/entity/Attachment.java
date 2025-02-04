@@ -24,7 +24,7 @@ public class Attachment {
     private String filePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")  // 외래 키 컬럼 이름
+    @JoinColumn(name = "post_id")
     private CommonPost post;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,5 +37,9 @@ public class Attachment {
         this.fileType = contentType;
         this.fileSize = size;
         this.filePath = string;
+    }
+
+    public <E extends CommonPost> void mappingCommonPost(E post) {
+        this.post = post;
     }
 }

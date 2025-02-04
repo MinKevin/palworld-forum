@@ -5,8 +5,8 @@ import online.palworldkorea.palworldkorea_online.global.exception.custom_excepti
 import online.palworldkorea.palworldkorea_online.global.exception.custom_exception.NotEnoughPermissionException;
 import online.palworldkorea.palworldkorea_online.global.util.MemberUtil;
 import online.palworldkorea.palworldkorea_online.member.entity.Member;
+import online.palworldkorea.palworldkorea_online.member.entity.MemberRole;
 import online.palworldkorea.palworldkorea_online.member.service.MemberService;
-import online.palworldkorea.palworldkorea_online.post.attachment.entity.Attachment;
 import online.palworldkorea.palworldkorea_online.post.attachment.service.AttachmentService;
 import online.palworldkorea.palworldkorea_online.post.common.SearchType;
 import online.palworldkorea.palworldkorea_online.post.common.SortType;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -71,9 +70,8 @@ public abstract class CommonPostService<
 
     public P createPost(Q postRequestDto) {
         Member author = memberService.getMemberByEmail(MemberUtil.getEmail());
-        List<Attachment> attachments = attachmentService.getAttachments(postRequestDto.getAttachments(), author);
 
-        E post = (E)postRequestDto.toEntity(author, attachments);
+        E post = (E)postRequestDto.toEntity(author);
 
         postRepository.save(post);
 
@@ -124,7 +122,7 @@ public abstract class CommonPostService<
     }
 
     private void hasEditPermission(E post) {
-        if (!post.getAuthor().getEmail().equals(MemberUtil.getEmail()))
+        if (!post.getAuthor().getEmail().equals(MemberUtil.getEmail()) && memberService.getMemberByEmail(MemberUtil.getEmail()).getMemberRole() != MemberRole.ADMIN)
             throw new NotEnoughPermissionException();
     }
 }

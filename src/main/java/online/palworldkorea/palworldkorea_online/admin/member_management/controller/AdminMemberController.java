@@ -1,6 +1,7 @@
 package online.palworldkorea.palworldkorea_online.admin.member_management.controller;
 
 import lombok.RequiredArgsConstructor;
+import online.palworldkorea.palworldkorea_online.admin.member_management.dto.AdminMemberDto;
 import online.palworldkorea.palworldkorea_online.admin.member_management.service.AdminMemberService;
 import online.palworldkorea.palworldkorea_online.global.response.CommonResponse;
 import online.palworldkorea.palworldkorea_online.global.response.SuccessCode;
@@ -24,7 +25,7 @@ public class AdminMemberController {
     }
 
     @PatchMapping("/{id}")
-    public CommonResponse<?> updateMemberRole(@PathVariable(name = "id") long id, @RequestBody MemberRole memberRole) {
-        return CommonResponse.success(SuccessCode.UPDATE_MEMBER_ROLE_SUCCESS, adminMemberService.updateMemberRole(id, memberRole));
+    public CommonResponse<?> updateMemberRole(@PathVariable(name = "id") long id, @RequestBody AdminMemberDto.Request adminMemberRequestDto) {
+        return CommonResponse.success(SuccessCode.UPDATE_MEMBER_ROLE_SUCCESS, adminMemberService.updateMemberRole(id, adminMemberRequestDto));
     }
 }

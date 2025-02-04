@@ -20,8 +20,6 @@ public class LinkService {
     private final LinkMapper linkMapper;
 
     public List<LinkDto.Response> getLinks() {
-        memberService.validateIsAdmin();
-
         return linkRepository.findAll().stream()
                 .map(linkMapper::toResponse)
                 .toList();

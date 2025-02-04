@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.palworldkorea.palworldkorea_online.global.response.CommonResponse;
 import online.palworldkorea.palworldkorea_online.global.response.SuccessCode;
-import online.palworldkorea.palworldkorea_online.post.attachment.dto.AttachmentDto;
 import online.palworldkorea.palworldkorea_online.post.common.SearchType;
 import online.palworldkorea.palworldkorea_online.post.common.SortType;
 import online.palworldkorea.palworldkorea_online.post.common.dto.CommonPostDto;
@@ -12,9 +11,6 @@ import online.palworldkorea.palworldkorea_online.post.common.entity.CommonPost;
 import online.palworldkorea.palworldkorea_online.post.common.mapper.CommonPostMapper;
 import online.palworldkorea.palworldkorea_online.post.common.service.CommonPostService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 public abstract class CommonPostController<
@@ -39,19 +35,13 @@ public abstract class CommonPostController<
     }
 
     @PostMapping
-    public CommonResponse<?> createPost(@RequestPart(name = "data") @Valid Q request,
-                                        @RequestPart(name = "attachments", required = false) List<MultipartFile> attachments) {
-        request.setAttachments(attachments);
-
+    public CommonResponse<?> createPost(@RequestBody @Valid Q request) {
         return CommonResponse.success(SuccessCode.POST_POST_SUCCESS, postService.createPost(request));
     }
 
     @PatchMapping("/{id}")
     public CommonResponse<?> updatePost(@PathVariable(name = "id") long id,
-                                        @RequestPart(name = "data") @Valid Q request,
-                                        @RequestPart(name = "attachments", required = false) List<MultipartFile> attachments) {
-        request.setAttachments(attachments);
-
+                                        @RequestBody @Valid Q request) {
         return CommonResponse.success(SuccessCode.UPDATE_POST_SUCCESS, postService.updatePost(id, request));
     }
 
